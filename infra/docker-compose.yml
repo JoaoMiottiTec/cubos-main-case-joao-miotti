@@ -2,15 +2,15 @@ services:
   postgres:
     image: postgres:15
     container_name: cubos_postgres
-    restart:  unless-stopped
+    restart: unless-stopped
     environment:
-       POSTGRES_USER: cubos
-       POSTGRES_PASSWORD: cubos
-       POSTGRES_DB: cubos_movies
+      POSTGRES_USER: cubos
+      POSTGRES_PASSWORD: cubos
+      POSTGRES_DB: cubos_movies
     ports:
-      -"5432:5432"
+      - "5432:5432"
     volumes:
-      -pg_data:/var/lib/postgresql/data
+      - pg_data:/var/lib/postgresql/data
 
   redis:
     image: redis:7
