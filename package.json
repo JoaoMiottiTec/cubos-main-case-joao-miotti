@@ -1,6 +1,56 @@
 {
+  "name": "cubos-movies",
+  "version": "1.0.0",
+  "description": "Projeto Cubos Movies — backend com Node.js, TypeScript, Prisma, ESLint e Prettier.",
+  "type": "module",
+  "main": "dist/server.js",
+  "scripts": {
+    "dev": "prisma generate && nodemon --watch src --ext ts --exec tsx apps/api/src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier . --check",
+    "format:fix": "prettier . --write",
+    "typecheck": "tsc --noEmit",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:format": "prisma format"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoaoMiottiTec/cubos-movies.git"
+  },
+  "keywords": [
+    "node",
+    "typescript",
+    "prisma",
+    "eslint",
+    "prettier",
+    "cubos"
+  ],
+  "author": "João Vitor (Miotti)",
+  "license": "MIT",
   "dependencies": {
     "@prisma/client": "^6.17.1",
+    "dotenv": "^17.2.3",
+    "fastify": "^5.6.1",
+    "fastify-plugin": "^5.1.0",
     "prisma": "^6.17.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.38.0",
+    "@types/node": "^24.9.1",
+    "@typescript-eslint/eslint-plugin": "^8.46.2",
+    "@typescript-eslint/parser": "^8.46.2",
+    "eslint": "^9.38.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
+    "eslint-plugin-unused-imports": "^4.3.0",
+    "nodemon": "^3.1.10",
+    "prettier": "^3.6.2",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
   }
 }
