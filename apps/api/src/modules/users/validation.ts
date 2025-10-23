@@ -26,7 +26,3 @@ export const loginSchema = z.object({
   path: ['email'],
 })
 .strict();
-
-export type CreateUserInput = z.infer<typeof createUserSchema>;
-export type UpdateUserInput = z.infer<typeof updateUserSchema>;
-export type LoginInput = z.infer<typeof loginSchema>;
