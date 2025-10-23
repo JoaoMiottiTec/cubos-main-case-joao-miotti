@@ -26,3 +26,10 @@ export const loginSchema = z.object({
   path: ['email'],
 })
 .strict();
+
+export const IdParam = z.object({ id: z.string().min(1) }).strict();
+export const ListQuery = z.object({
+  page: z.coerce.number().int().positive().default(1),
+  pageSize: z.coerce.number().int().positive().max(100).default(20),
+}).strict();
+
