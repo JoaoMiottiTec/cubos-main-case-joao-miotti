@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 
-const API =
-  process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') || 'http://localhost:3333';
+const API = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') || 'http://localhost:3333';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -45,8 +44,7 @@ export default function LoginPage() {
       try {
         const data = await res.json();
         if (data?.token) localStorage.setItem('token', data.token);
-      } catch {
-      }
+      } catch {}
       window.location.href = '/movies';
     } catch (err: any) {
       setError(err?.message ?? 'Erro inesperado ao tentar entrar.');
@@ -143,7 +141,10 @@ export default function LoginPage() {
             )}
 
             <div className="flex items-center justify-between">
-              <a href="/forgot-password" className="text-xs text-white/70 underline-offset-2 hover:underline">
+              <a
+                href="/forgot-password"
+                className="text-xs text-white/70 underline-offset-2 hover:underline"
+              >
                 Esqueci minha senha
               </a>
 

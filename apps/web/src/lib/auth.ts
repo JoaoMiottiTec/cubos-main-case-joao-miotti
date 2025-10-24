@@ -8,10 +8,10 @@ export function clearToken() {
 }
 
 export async function login(email: string, password: string) {
-  const { token, user } = await http.post<{ token: string; user: { id: string; name: string; email: string } }>(
-    '/auth/login',
-    { email, password }
-  );
+  const { token, user } = await http.post<{
+    token: string;
+    user: { id: string; name: string; email: string };
+  }>('/auth/login', { email, password });
   saveToken(token);
   return user;
 }

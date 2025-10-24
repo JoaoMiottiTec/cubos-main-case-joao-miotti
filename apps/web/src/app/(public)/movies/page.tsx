@@ -6,8 +6,8 @@ type Movie = {
   id: string | number;
   title: string;
   posterUrl?: string | null;
-  genres?: string[];            // opcional
-  voteAverage?: number | null;  // 0..100 ou 0..10 -> normalizo abaixo
+  genres?: string[]; // opcional
+  voteAverage?: number | null; // 0..100 ou 0..10 -> normalizo abaixo
 };
 
 type MoviesResponsePreferred = {
@@ -26,8 +26,7 @@ type MoviesResponseAlt = {
   currentPage?: number;
 };
 
-const API =
-  process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') || 'http://localhost:3333';
+const API = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') || 'http://localhost:3333';
 
 const PAGE_SIZE = 12;
 
@@ -198,22 +197,17 @@ export default function MoviesPage() {
           <div
             className="grid gap-4"
             style={{
-              gridTemplateColumns:
-                'repeat(auto-fill, minmax(min(160px, 100%), 1fr))',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(min(160px, 100%), 1fr))',
             }}
           >
-            {loading && movies.length === 0 && (
-              <SkeletonGrid count={PAGE_SIZE} />
-            )}
+            {loading && movies.length === 0 && <SkeletonGrid count={PAGE_SIZE} />}
 
             {movies.map((m) => (
               <MovieCard key={m.id} movie={m} />
             ))}
 
             {!loading && movies.length === 0 && (
-              <p className="col-span-full text-sm text-white/70">
-                Nenhum filme encontrado.
-              </p>
+              <p className="col-span-full text-sm text-white/70">Nenhum filme encontrado.</p>
             )}
           </div>
         )}
@@ -258,7 +252,6 @@ export default function MoviesPage() {
   );
 }
 
-
 function MovieCard({ movie }: { movie: Movie }) {
   const pct = normalizeVote(movie.voteAverage);
   const genres = movie.genres?.join(', ');
@@ -292,9 +285,7 @@ function MovieCard({ movie }: { movie: Movie }) {
 
       <div className="p-2">
         <h3 className="line-clamp-2 text-[13px] font-semibold">{movie.title}</h3>
-        {genres && (
-          <p className="mt-1 line-clamp-1 text-[11px] text-white/60">{genres}</p>
-        )}
+        {genres && <p className="mt-1 line-clamp-1 text-[11px] text-white/60">{genres}</p>}
       </div>
     </a>
   );
@@ -327,14 +318,7 @@ function Ring({ value }: { value: number }) {
         strokeDasharray={`${dash} ${circ - dash}`}
         transform={`rotate(-90 ${size / 2} ${size / 2})`}
       />
-      <text
-        x="50%"
-        y="50%"
-        dominantBaseline="middle"
-        textAnchor="middle"
-        fontSize="11"
-        fill="#fff"
-      >
+      <text x="50%" y="50%" dominantBaseline="middle" textAnchor="middle" fontSize="11" fill="#fff">
         {Math.round(value)}%
       </text>
     </svg>

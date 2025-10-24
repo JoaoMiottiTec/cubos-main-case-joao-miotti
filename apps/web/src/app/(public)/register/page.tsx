@@ -9,8 +9,7 @@ type FormState = {
   confirm: string;
 };
 
-const API =
-  process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '');
+const API = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '');
 
 export default function RegisterPage() {
   const [form, setForm] = useState<FormState>({
@@ -24,19 +23,12 @@ export default function RegisterPage() {
   const [success, setSuccess] = useState<string | null>(null);
   const [showPass, setShowPass] = useState(false);
 
-  const emailValid = useMemo(
-    () => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email),
-    [form.email]
-  );
+  const emailValid = useMemo(() => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email), [form.email]);
   const passStrongEnough = form.password.length >= 8;
   const passMatch = form.password === form.confirm;
 
   const canSubmit =
-    form.name.trim().length >= 2 &&
-    emailValid &&
-    passStrongEnough &&
-    passMatch &&
-    !submitting;
+    form.name.trim().length >= 2 && emailValid && passStrongEnough && passMatch && !submitting;
 
   function update<K extends keyof FormState>(key: K) {
     return (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -86,8 +78,7 @@ export default function RegisterPage() {
           const data = await res.json();
           if (res.status === 409) msg = 'E-mail já cadastrado.';
           else msg = pickErrMsg(data, msg);
-        } catch {
-        }
+        } catch {}
         throw new Error(msg);
       }
 

@@ -1,11 +1,9 @@
-
-@import "tailwindcss";
-
+@import 'tailwindcss';
 
 :root {
   --color-bg: #0a0a0a;
   --color-surface: #1a1a1a;
-  --color-primary: #8E4EC6;
+  --color-primary: #8e4ec6;
   --color-foreground: #ffffff;
 }
 
@@ -52,7 +50,6 @@ button.bg-primary:hover {
   @apply outline-none ring-2 ring-[color:var(--color-primary)]/60 ring-offset-0;
 }
 
-
 .hero-cinema {
   position: absolute;
   inset-inline: 0;
@@ -61,13 +58,15 @@ button.bg-primary:hover {
   background-image: url('/bg-cinema.jpg');
   background-size: cover;
   background-position: center;
-  opacity: .55;
+  opacity: 0.55;
   pointer-events: none;
   z-index: -10;
 }
 
 @media (min-width: 768px) {
-  .hero-cinema { height: 300px; }
+  .hero-cinema {
+    height: 300px;
+  }
 }
 
 .hero-fade {
@@ -77,13 +76,15 @@ button.bg-primary:hover {
   height: 220px;
   background: linear-gradient(
     to bottom,
-    rgba(0,0,0,0.25) 0%,
-    rgba(0,0,0,0.70) 52%,
-    rgba(0,0,0,1) 100%
+    rgba(0, 0, 0, 0.25) 0%,
+    rgba(0, 0, 0, 0.7) 52%,
+    rgba(0, 0, 0, 1) 100%
   );
   pointer-events: none;
   z-index: -10;
 }
 @media (min-width: 768px) {
-  .hero-fade { height: 300px; }
+  .hero-fade {
+    height: 300px;
+  }
 }

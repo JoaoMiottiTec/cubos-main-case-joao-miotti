@@ -1,8 +1,12 @@
-
 import { buildKey } from './utils.js';
 
 import { presignUpload, presignDownload, headObject } from './service.js';
-import { ConfirmUploadSchema, MAX_BYTES, PresignDownloadSchema, PresignUploadSchema } from './validation.js';
+import {
+  ConfirmUploadSchema,
+  MAX_BYTES,
+  PresignDownloadSchema,
+  PresignUploadSchema,
+} from './validation.js';
 import prisma from '../../prisma.js';
 
 export class StorageController {
@@ -31,7 +35,9 @@ export class StorageController {
   }
 
   async confirmUpload(rawParams: unknown, rawBody: unknown) {
-    const { movieId } = (await import('zod')).z.object({ movieId: (await import('zod')).z.string().cuid() }).parse(rawParams);
+    const { movieId } = (await import('zod')).z
+      .object({ movieId: (await import('zod')).z.string().cuid() })
+      .parse(rawParams);
     const body = ConfirmUploadSchema.parse(rawBody);
 
     const head = await headObject(body.key);
@@ -55,8 +61,13 @@ export class StorageController {
         isPrimary: body.setAsPrimary ?? false,
       },
       select: {
-        id: true, key: true, type: true, isPrimary: true,
-        contentType: true, size: true, createdAt: true,
+        id: true,
+        key: true,
+        type: true,
+        isPrimary: true,
+        contentType: true,
+        size: true,
+        createdAt: true,
       },
     });
 

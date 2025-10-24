@@ -24,22 +24,28 @@ export async function presignUpload(movieId: string, file: File) {
   return http.post<{ url: string; key: string; expiresIn: number }>(
     '/storage/presign-upload',
     { movieId, fileName: file.name, contentType: file.type, size: file.size },
-    { auth: true }
+    { auth: true },
   );
 }
 export async function putToR2(url: string, file: File) {
-  const res = await fetch(url, { method: 'PUT', headers: { 'Content-Type': file.type }, body: file });
+  const res = await fetch(url, {
+    method: 'PUT',
+    headers: { 'Content-Type': file.type },
+    body: file,
+  });
   if (!res.ok) throw new Error('Upload failed');
 }
 export async function confirmImage(movieId: string, key: string, setAsPrimary = true) {
   const { image } = await http.post<{ ok: true; image: MovieImage }>(
     `/storage/movies/${movieId}/images/confirm`,
     { key, type: 'POSTER', setAsPrimary },
-    { auth: true }
+    { auth: true },
   );
   return image;
 }
 export async function getPosterUrl(movieId: string) {
-  const { url } = await http.get<{ url: string; key: string; expiresIn: number }>(`/movies/${movieId}/poster`);
+  const { url } = await http.get<{ url: string; key: string; expiresIn: number }>(
+    `/movies/${movieId}/poster`,
+  );
   return url;
 }

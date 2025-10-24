@@ -8,7 +8,7 @@ import type { CreateUserInput, UpdateUserInput, UserSafe } from './types.js';
 import { mailer } from '../../core/mailer.js';
 
 export const usersService = {
-async create(input: CreateUserInput): Promise<UserSafe> {
+  async create(input: CreateUserInput): Promise<UserSafe> {
     const email = input.email.trim().toLowerCase();
     const passwordHash = await argon2.hash(input.password);
 

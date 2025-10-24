@@ -40,8 +40,8 @@ async function request<T>(method: string, path: string, opts: Opts = {}): Promis
 }
 
 export const http = {
-  get:  <T>(p: string, o?: Omit<Opts, 'body'>)       => request<T>('GET',    p, o),
-  post: <T>(p: string, body?: unknown, o?: Opts)     => request<T>('POST',   p, { ...o, body }),
-  patch:<T>(p: string, body?: unknown, o?: Opts)     => request<T>('PATCH',  p, { ...o, body }),
-  del:  <T>(p: string, o?: Omit<Opts, 'body'>)       => request<T>('DELETE', p, o),
+  get: <T>(p: string, o?: Omit<Opts, 'body'>) => request<T>('GET', p, o),
+  post: <T>(p: string, body?: unknown, o?: Opts) => request<T>('POST', p, { ...o, body }),
+  patch: <T>(p: string, body?: unknown, o?: Opts) => request<T>('PATCH', p, { ...o, body }),
+  del: <T>(p: string, o?: Omit<Opts, 'body'>) => request<T>('DELETE', p, o),
 };

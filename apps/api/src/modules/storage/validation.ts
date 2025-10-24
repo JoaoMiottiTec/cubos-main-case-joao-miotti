@@ -1,11 +1,6 @@
 import { z } from 'zod';
 
-export const ALLOWED_CT = [
-  'image/jpeg',
-  'image/png',
-  'image/webp',
-  'image/avif',
-] as const;
+export const ALLOWED_CT = ['image/jpeg', 'image/png', 'image/webp', 'image/avif'] as const;
 
 export const MAX_BYTES = 5 * 1024 * 1024;
 

@@ -4,7 +4,7 @@ export interface Movie {
   id: string;
   userId: string;
   title: string;
-  releaseDate: string;       // ISO
+  releaseDate: string; // ISO
   durationMinutes: number;
   genres: string[];
   status: MovieStatus;
