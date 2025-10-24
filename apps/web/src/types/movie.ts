@@ -4,22 +4,11 @@ export interface Movie {
   id: string;
   userId: string;
   title: string;
-  originalTitle?: string | null;
-  tagline?: string | null;
-  description?: string | null;
-  releaseDate: string; // ISO string
+  releaseDate: string;       // ISO
   durationMinutes: number;
-  status: MovieStatus;
-  originalLanguage?: string | null;
-  posterUrl?: string | null;      // compat, pode vir vazio
-  trailerUrl?: string | null;
-  popularity?: number | null;
-  voteCount?: number | null;
-  voteAverage?: number | null;
-  budgetUSD?: number | null;
-  revenueUSD?: number | null;
-  profitUSD?: number | null;
   genres: string[];
+  status: MovieStatus;
+  posterUrl?: string | null;
   createdAt: string;
   updatedAt: string;
 }

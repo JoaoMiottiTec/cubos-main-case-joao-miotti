@@ -11,8 +11,6 @@ const auth = async (req: any, reply: any) => {
 };
 
 export async function registerUserRoutes(app: FastifyInstance) {
-  app.post('/', usersController.create);
-
   app.get('/', { preHandler: auth }, usersController.list);
   app.get('/:id', { preHandler: auth }, usersController.findById);
   app.patch('/:id', { preHandler: auth }, usersController.update);
