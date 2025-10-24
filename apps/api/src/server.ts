@@ -8,7 +8,7 @@ import { registerRoutes } from './routes/index.js';
 const app = Fastify({ logger: true });
 
 app.register(fastifyJwt, {
-  secret: process.env.JWT_SECRET || 'dev-secret',
+  secret: process.env.JWT_SECRET!,
 });
 
 app.get('/health', async () => ({ ok: true }));

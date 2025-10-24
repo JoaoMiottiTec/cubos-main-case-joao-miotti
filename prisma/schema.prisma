@@ -7,6 +7,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum MovieStatus {
+  PLANNED
+  IN_PRODUCTION
+  RELEASED
+  CANCELLED
+}
+
+enum ImageType {
+  POSTER
+  GALLERY
+}
+
 model User {
   id        String   @id @default(cuid())
   name      String
@@ -40,6 +52,7 @@ model Movie {
   revenueUSD       Int?
   profitUSD        Int?
   genres           String[]
+  images           MovieImage[]
   createdAt        DateTime    @default(now())
   updatedAt        DateTime    @updatedAt
   user             User        @relation(fields: [userId], references: [id])
@@ -49,9 +62,21 @@ model Movie {
   @@index([genres])
 }
 
-enum MovieStatus {
-  PLANNED
-  IN_PRODUCTION
-  RELEASED
-  CANCELLED
+model MovieImage {
+  id           String   @id @default(cuid())
+  movieId      String
+  movie        Movie    @relation(fields: [movieId], references: [id], onDelete: Cascade)
+
+  key          String   @unique
+  bucket       String
+  contentType  String?
+  size         Int?
+  etag         String?
+
+  type         ImageType @default(GALLERY)
+  isPrimary    Boolean   @default(false)
+
+  createdAt    DateTime  @default(now())
+
+  @@index([movieId])
 }
