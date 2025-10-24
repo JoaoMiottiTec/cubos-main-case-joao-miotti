@@ -1,4 +1,5 @@
 import type { z } from 'zod';
+
 import { createMovieSchema, listMoviesQuerySchema } from './validation.js';
 
 export type CreateMovieInput = z.infer<typeof createMovieSchema>;

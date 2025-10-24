@@ -1,5 +1,5 @@
-import prisma from '../../prisma.js';
 import { notFound } from '../../core/errors.js';
+import prisma from '../../prisma.js';
 import { movieSelect } from './select.js';
 import type { CreateMovieInput, ListMoviesQuery, MovieSafe } from './types.js';
 

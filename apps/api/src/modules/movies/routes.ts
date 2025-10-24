@@ -1,4 +1,5 @@
 import type { FastifyInstance } from 'fastify';
+
 import { moviesController } from './controller.js';
 
 export async function registerMovieRoutes(app: FastifyInstance) {

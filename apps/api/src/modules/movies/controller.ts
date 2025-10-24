@@ -1,7 +1,8 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
+
 import { asyncHandler } from '../../core/asyncHandler.js';
-import { createMovieSchema, listMoviesQuerySchema } from './validation.js';
 import { moviesService } from './service.js';
+import { createMovieSchema, listMoviesQuerySchema } from './validation.js';
 
 const getUserId = (req: FastifyRequest) => {
   const u: any = (req as any).user;
