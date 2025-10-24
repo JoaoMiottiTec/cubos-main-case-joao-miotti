@@ -2,7 +2,6 @@
 import { z } from 'zod';
 import { ConfirmUploadSchema, PresignDownloadSchema, PresignUploadSchema } from './validation.js';
 
-
 export type PresignUploadDTO = z.infer<typeof PresignUploadSchema>;
 export type PresignDownloadDTO = z.infer<typeof PresignDownloadSchema>;
 export type ConfirmUploadDTO = z.infer<typeof ConfirmUploadSchema>;

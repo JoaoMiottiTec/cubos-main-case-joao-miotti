@@ -1,0 +1,90 @@
+@import 'tailwindcss';
+
+:root {
+  --color-bg: #0a0a0a;
+  --color-surface: #1a1a1a;
+  --color-primary: #8e4ec6;
+  --color-foreground: #ffffff;
+}
+
+body {
+  @apply text-[var(--color-foreground)] bg-[var(--color-bg)];
+  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+}
+
+.card {
+  @apply rounded-xl border border-white/10 bg-[color:var(--color-surface)]/85
+         shadow-[0_25px_40px_-15px_rgba(0,0,0,0.6)] backdrop-blur-md;
+}
+
+.bg-surface {
+  background-color: var(--color-surface);
+}
+
+.text-primary {
+  color: var(--color-primary);
+}
+
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+button {
+  @apply transition-colors duration-200;
+}
+
+button.bg-primary:hover {
+  filter: brightness(1.1);
+}
+
+.bg-cinema {
+  background-image: url('/bg-cinema.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(3px);
+  opacity: 0.6;
+}
+
+.focus-ring {
+  @apply outline-none ring-2 ring-[color:var(--color-primary)]/60 ring-offset-0;
+}
+
+.hero-cinema {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 220px;
+  background-image: url('/bg-cinema.jpg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: -10;
+}
+
+@media (min-width: 768px) {
+  .hero-cinema {
+    height: 300px;
+  }
+}
+
+.hero-fade {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 220px;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.25) 0%,
+    rgba(0, 0, 0, 0.7) 52%,
+    rgba(0, 0, 0, 1) 100%
+  );
+  pointer-events: none;
+  z-index: -10;
+}
+@media (min-width: 768px) {
+  .hero-fade {
+    height: 300px;
+  }
+}
