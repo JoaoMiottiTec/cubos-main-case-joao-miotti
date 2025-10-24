@@ -19,4 +19,14 @@ export const authController = {
     const token = await reply.jwtSign({ sub: user.id, email: user.email });
     return reply.status(200).send({ data: { user, token } });
   }),
+
+   confirm: asyncHandler(async (req: FastifyRequest, reply: FastifyReply) => {
+    const token = (req.params as any)?.token as string;
+    if (!token) return reply.status(400).send({ status: 'error', message: 'Missing token' });
+
+    const { ok } = await authService.confirmEmail(token);
+    if (!ok) return reply.status(400).send({ status: 'error', message: 'Invalid or expired token' });
+
+    return reply.status(200).send({ data: { confirmed: true } });
+  }),
 };
