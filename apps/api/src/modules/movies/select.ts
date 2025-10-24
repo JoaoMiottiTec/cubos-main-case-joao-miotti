@@ -1,0 +1,25 @@
+import { Prisma } from '@prisma/client';
+
+export const movieSelect = Prisma.validator<Prisma.MovieSelect>()({
+  id: true,
+  userId: true,
+  title: true,
+  originalTitle: true,
+  tagline: true,
+  description: true,
+  releaseDate: true,
+  durationMinutes: true,
+  status: true,
+  originalLanguage: true,
+  posterUrl: true,
+  trailerUrl: true,
+  popularity: true,
+  voteCount: true,
+  voteAverage: true,
+  budgetUSD: true,
+  revenueUSD: true,
+  profitUSD: true,
+  genres: true,
+  createdAt: true,
+  updatedAt: true,
+} as const);
