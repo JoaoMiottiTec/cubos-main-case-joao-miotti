@@ -1,6 +1,6 @@
 import argon2 from 'argon2';
 
-import { notFound,unauthorized } from '../../core/errors.js';
+import { notFound, unauthorized } from '../../core/errors.js';
 import prisma from '../../prisma.js';
 import { userSelect, userWithPasswordSelect } from '../users/select.js';
 import type { LoginInput, UserSafe } from '../users/types.js';
