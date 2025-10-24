@@ -11,6 +11,9 @@ model User {
   id        String   @id @default(cuid())
   name      String
   email     String   @unique
+  confirmed Boolean  @default(false)
+  confirmToken        String?  @unique
+  confirmTokenExpires DateTime?
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

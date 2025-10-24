@@ -1,4 +1,3 @@
-// src/users/service.ts
 import { Prisma } from '@prisma/client';
 import argon2 from 'argon2';
 
@@ -6,17 +5,48 @@ import { conflict, notFound } from '../../core/errors.js';
 import prisma from '../../prisma.js';
 import { userSelect } from './select.js';
 import type { CreateUserInput, UpdateUserInput, UserSafe } from './types.js';
+import { mailer } from '../../core/mailer.js';
 
 export const usersService = {
-  async create(input: CreateUserInput): Promise<UserSafe> {
+async create(input: CreateUserInput): Promise<UserSafe> {
     const email = input.email.trim().toLowerCase();
     const passwordHash = await argon2.hash(input.password);
 
+    const token = crypto.randomUUID();
+    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
+
     try {
-      return await prisma.user.create({
-        data: { name: input.name.trim(), email, password: passwordHash },
+      const user = await prisma.user.create({
+        data: {
+          name: input.name.trim(),
+          email,
+          password: passwordHash,
+          confirmToken: token,
+          confirmTokenExpires: expiresAt,
+        },
         select: userSelect,
       });
+
+      const confirmUrl = `${process.env.APP_URL}/auth/confirm/${token}`;
+
+      (async () => {
+        try {
+          await mailer.sendMail({
+            from: process.env.MAIL_FROM,
+            to: user.email,
+            subject: 'Confirme seu cadastro',
+            html: `
+              <p>Fala, ${user.name}!</p>
+              <p>Confirme seu e-mail clicando no link abaixo (expira em 24h):</p>
+              <p><a href="${confirmUrl}">${confirmUrl}</a></p>
+            `,
+            text: `Confirme seu e-mail: ${confirmUrl}`,
+          });
+        } catch (err) {
+          console.error('[mailer] Falha ao enviar e-mail de confirmação:', err);
+        }
+      })();
+      return user;
     } catch (e: unknown) {
       if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === 'P2002') {
         throw conflict('Email already registered');
@@ -24,7 +54,6 @@ export const usersService = {
       throw e;
     }
   },
-
   async findById(id: string): Promise<UserSafe> {
     const user = await prisma.user.findUnique({ where: { id }, select: userSelect });
     if (!user) throw notFound('User not found');
