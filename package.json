@@ -32,6 +32,7 @@
   "author": "João Vitor (Miotti)",
   "license": "MIT",
   "dependencies": {
+    "@fastify/jwt": "^10.0.0",
     "@nestjs/common": "^11.1.7",
     "@nestjs/core": "^11.1.7",
     "@nestjs/platform-fastify": "^11.1.7",
