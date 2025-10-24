@@ -1,5 +1,5 @@
-
 import type { FastifyInstance } from 'fastify';
+
 import { usersController } from './controller.js';
 
 const auth = async (req: any, reply: any) => {
@@ -11,7 +11,6 @@ const auth = async (req: any, reply: any) => {
 };
 
 export async function registerUserRoutes(app: FastifyInstance) {
-
   app.post('/', usersController.create);
 
   app.get('/', { preHandler: auth }, usersController.list);

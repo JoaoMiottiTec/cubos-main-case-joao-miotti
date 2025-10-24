@@ -1,5 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
 import { FastifyRequest } from 'fastify';
+
 import { verifyJwtOrThrow } from './jwt.util.js';
 
 @Injectable()

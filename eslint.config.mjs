@@ -32,7 +32,10 @@ export default [
       ...prettier.rules,
 
       'unused-imports/no-unused-imports': 'warn',
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
+      ],
 
       'simple-import-sort/imports': 'warn',
       'simple-import-sort/exports': 'warn',

@@ -1,5 +1,6 @@
-import { Prisma } from "@prisma/client";
-import { UserSafe } from "./types.js";
+import { Prisma } from '@prisma/client';
+
+import { UserSafe } from './types.js';
 
 export const userSelect = {
   id: true,
@@ -8,7 +9,6 @@ export const userSelect = {
   createdAt: true,
   updatedAt: true,
 } satisfies Record<keyof UserSafe, true>;
-
 
 export const userWithPasswordSelect = Prisma.validator<Prisma.UserSelect>()({
   id: true,

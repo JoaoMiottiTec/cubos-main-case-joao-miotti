@@ -1,6 +1,8 @@
 import 'dotenv/config';
-import Fastify from 'fastify';
+
 import fastifyJwt from '@fastify/jwt';
+import Fastify from 'fastify';
+
 import { registerRoutes } from './routes/index.js';
 
 const app = Fastify({ logger: true });

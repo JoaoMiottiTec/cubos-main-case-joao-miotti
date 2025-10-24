@@ -1,5 +1,6 @@
-import z from "zod";
-import { createUserSchema, loginSchema, updateUserSchema } from "./validation.js";
+import z from 'zod';
+
+import { createUserSchema, loginSchema, updateUserSchema } from './validation.js';
 
 export type UserSafe = {
   id: string;
@@ -13,7 +14,6 @@ export type AuthResponse = {
   token: string;
   user: UserSafe;
 };
-
 
 export type CreateUserInput = z.infer<typeof createUserSchema>;
 export type UpdateUserInput = z.infer<typeof updateUserSchema>;

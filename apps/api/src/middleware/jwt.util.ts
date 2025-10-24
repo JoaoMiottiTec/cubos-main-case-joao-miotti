@@ -7,7 +7,6 @@ if (!SECRET) {
 
 const EXPIRES_IN = (process.env.JWT_EXPIRES ?? '1d') as SignOptions['expiresIn'];
 
-
 export function signJwt(userId: string, email: string) {
   const payload = { email };
   const options: SignOptions = { subject: userId, expiresIn: EXPIRES_IN };

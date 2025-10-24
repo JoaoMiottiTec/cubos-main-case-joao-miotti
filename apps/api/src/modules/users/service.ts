@@ -2,14 +2,10 @@
 import { Prisma } from '@prisma/client';
 import argon2 from 'argon2';
 
+import { conflict, notFound } from '../../core/errors.js';
 import prisma from '../../prisma.js';
-import { conflict, notFound, unauthorized } from '../../core/errors.js';
-import { userSelect, userWithPasswordSelect } from './select.js';
-import type {
-  CreateUserInput,
-  UpdateUserInput,
-  UserSafe,
-} from './types.js';
+import { userSelect } from './select.js';
+import type { CreateUserInput, UpdateUserInput, UserSafe } from './types.js';
 
 export const usersService = {
   async create(input: CreateUserInput): Promise<UserSafe> {
@@ -35,7 +31,10 @@ export const usersService = {
     return user;
   },
 
-  async list(page = 1, pageSize = 20): Promise<{
+  async list(
+    page = 1,
+    pageSize = 20,
+  ): Promise<{
     items: UserSafe[];
     total: number;
     page: number;
@@ -87,5 +86,5 @@ export const usersService = {
 
     await prisma.user.delete({ where: { id } });
     return { deleted: true };
-  }
+  },
 };

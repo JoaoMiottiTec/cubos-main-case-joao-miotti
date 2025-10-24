@@ -1,6 +1,7 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
+
 import { asyncHandler } from '../../core/asyncHandler.js';
-import { loginSchema } from '../users/validation.js'; 
+import { loginSchema } from '../users/validation.js';
 import { authService } from './service.js';
 
 export const authController = {
@@ -10,7 +11,7 @@ export const authController = {
       return reply.status(422).send({
         status: 'error',
         message: 'Validation failed',
-        details: parsed.error.issues.map(i => ({ path: i.path, message: i.message })),
+        details: parsed.error.issues.map((i) => ({ path: i.path, message: i.message })),
       });
     }
 

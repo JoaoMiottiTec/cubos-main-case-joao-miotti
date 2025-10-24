@@ -1,8 +1,8 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
+
 import { asyncHandler } from '../../core/asyncHandler.js';
 import { usersService } from './service.js';
 import { createUserSchema, IdParam, ListQuery, updateUserSchema } from './validation.js';
-
 
 export const usersController = {
   create: asyncHandler(async (req: FastifyRequest, reply: FastifyReply) => {
@@ -11,7 +11,7 @@ export const usersController = {
       return reply.status(422).send({
         status: 'error',
         message: 'Validation failed',
-        details: parsed.error.issues.map(i => ({ path: i.path, message: i.message })),
+        details: parsed.error.issues.map((i) => ({ path: i.path, message: i.message })),
       });
     }
 
@@ -25,7 +25,7 @@ export const usersController = {
       return reply.status(422).send({
         status: 'error',
         message: 'Validation failed',
-        details: parsed.error.issues.map(i => ({ path: i.path, message: i.message })),
+        details: parsed.error.issues.map((i) => ({ path: i.path, message: i.message })),
       });
     }
 
@@ -39,7 +39,7 @@ export const usersController = {
       return reply.status(422).send({
         status: 'error',
         message: 'Validation failed',
-        details: parsed.error.issues.map(i => ({ path: i.path, message: i.message })),
+        details: parsed.error.issues.map((i) => ({ path: i.path, message: i.message })),
       });
     }
 
@@ -59,7 +59,7 @@ export const usersController = {
       return reply.status(422).send({
         status: 'error',
         message: 'Validation failed',
-        details: issues.map(i => ({ path: i.path, message: i.message })),
+        details: issues.map((i) => ({ path: i.path, message: i.message })),
       });
     }
 
@@ -73,7 +73,7 @@ export const usersController = {
       return reply.status(422).send({
         status: 'error',
         message: 'Validation failed',
-        details: parsed.error.issues.map(i => ({ path: i.path, message: i.message })),
+        details: parsed.error.issues.map((i) => ({ path: i.path, message: i.message })),
       });
     }
 
