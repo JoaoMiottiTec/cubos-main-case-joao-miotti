@@ -6,8 +6,8 @@ type Movie = {
   id: string | number;
   title: string;
   posterUrl?: string | null;
-  genres?: string[]; // opcional
-  voteAverage?: number | null; // 0..100 ou 0..10 -> normalizo abaixo
+  genres?: string[];
+  voteAverage?: number | null;
 };
 
 type MoviesResponsePreferred = {
@@ -17,7 +17,6 @@ type MoviesResponsePreferred = {
   totalPages: number;
 };
 
-// fallback comum (caso sua API devolva outra forma)
 type MoviesResponseAlt = {
   items?: Movie[];
   results?: Movie[];
@@ -26,8 +25,7 @@ type MoviesResponseAlt = {
   currentPage?: number;
 };
 
-const API = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') || 'http://localhost:3333';
-
+const API_BASE = '/api';
 const PAGE_SIZE = 12;
 
 export default function MoviesPage() {
@@ -38,10 +36,8 @@ export default function MoviesPage() {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [totalPages, setTotalPages] = useState(1);
 
-  // debounce de busca
   const debouncedSearch = useDebouncedValue(search, 400);
 
-  // foco no input ao carregar
   const inputRef = useRef<HTMLInputElement | null>(null);
   useEffect(() => {
     inputRef.current?.focus();
@@ -52,21 +48,21 @@ export default function MoviesPage() {
     setLoading(true);
     setError(null);
 
-    const url = new URL(`${API}/movies`);
+    const url = new URL(`${API_BASE}/movies`, window.location.origin);
     if (debouncedSearch.trim()) url.searchParams.set('search', debouncedSearch.trim());
     url.searchParams.set('page', String(page));
-    url.searchParams.set('limit', String(PAGE_SIZE));
+    url.searchParams.set('pageSize', String(PAGE_SIZE));
 
-    fetch(url.toString(), {
+    const headers: Record<string, string> = { Accept: 'application/json' };
+    if (typeof window !== 'undefined') {
+      const token = localStorage.getItem('token');
+      if (token) headers.Authorization = `Bearer ${token}`;
+    }
+
+    fetch(url.toString().replace(window.location.origin, ''), {
       method: 'GET',
-      credentials: 'include', // <<— cookie httpOnly
-      headers: {
-        Accept: 'application/json',
-        // Se usar token no localStorage (NÃO recomendado em prod), descomente:
-        // ...(localStorage.getItem('token')
-        //   ? { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        //   : {}),
-      },
+      credentials: 'include',
+      headers,
     })
       .then(async (res) => {
         if (!res.ok) {
@@ -83,12 +79,18 @@ export default function MoviesPage() {
         }
         return res.json();
       })
-      .then((data: MoviesResponsePreferred & MoviesResponseAlt) => {
+      .then((raw: any) => {
         if (cancel) return;
 
-        const list = data.data ?? data.items ?? data.results ?? [];
-        const tp = data.totalPages ?? data.pages ?? 1;
-        const cp = data.page ?? data.currentPage ?? page;
+        const payload = raw?.data ?? raw ?? {};
+        const list: Movie[] = payload.items ?? payload.results ?? payload.data ?? [];
+        const total: number =
+          payload.total ?? payload.count ?? (Array.isArray(list) ? list.length : 0);
+        const cp: number = payload.page ?? payload.currentPage ?? page;
+        const ps: number = payload.pageSize ?? PAGE_SIZE;
+
+        const tp: number =
+          payload.totalPages ?? payload.pages ?? Math.max(1, Math.ceil(total / (ps || PAGE_SIZE)));
 
         setMovies(list);
         setTotalPages(tp || 1);
@@ -300,14 +302,7 @@ function Ring({ value }: { value: number }) {
 
   return (
     <svg width={size} height={size} className="drop-shadow">
-      <circle
-        cx={size / 2}
-        cy={size / 2}
-        r={r}
-        stroke="rgba(255,255,255,0.2)"
-        strokeWidth={stroke}
-        fill="none"
-      />
+      <circle cx={size / 2} cy={size / 2} r={r} stroke="rgba(255,255,255,0.2)" strokeWidth={stroke} fill="none" />
       <circle
         cx={size / 2}
         cy={size / 2}
@@ -329,10 +324,7 @@ function SkeletonGrid({ count }: { count: number }) {
   return (
     <>
       {Array.from({ length: count }).map((_, i) => (
-        <div
-          key={i}
-          className="animate-pulse rounded-lg border border-white/10 bg-white/[0.06] overflow-hidden"
-        >
+        <div key={i} className="animate-pulse rounded-lg border border-white/10 bg-white/[0.06] overflow-hidden">
           <div className="aspect-[2/3] bg-white/10" />
           <div className="p-2 space-y-2">
             <div className="h-3 w-3/4 bg-white/10 rounded" />

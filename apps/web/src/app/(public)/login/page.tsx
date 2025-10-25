@@ -2,8 +2,6 @@
 
 import { useState } from 'react';
 
-const API = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') || 'http://localhost:3333';
-
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [pass, setPass] = useState('');
@@ -16,14 +14,11 @@ export default function LoginPage() {
     setError(null);
 
     try {
-      const body = {
-        email: email.trim(),
-        password: pass,
-      };
+      const body = { email: email.trim(), password: pass };
 
-      const res = await fetch(`${API}/auth/login`, {
+      const res = await fetch('/api/auth/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         credentials: 'include',
         body: JSON.stringify(body),
       });
@@ -42,8 +37,17 @@ export default function LoginPage() {
       }
 
       try {
-        const data = await res.json();
-        if (data?.token) localStorage.setItem('token', data.token);
+        const data = await res.json().catch(() => null);
+        const token =
+          data?.token ||
+          data?.accessToken ||
+          data?.jwt ||
+          data?.data?.token ||
+          null;
+
+        if (token) {
+          localStorage.setItem('token', token);
+        }
       } catch {}
       window.location.href = '/movies';
     } catch (err: any) {
@@ -86,13 +90,12 @@ export default function LoginPage() {
             >
               ☼
             </button>
-            <button
-              type="button"
-              title="Logout"
+            <a
+              href="/register"
               className="rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-white shadow hover:brightness-110"
             >
-              Logout
-            </button>
+              Registrar
+            </a>
           </div>
         </div>
       </header>
@@ -102,7 +105,7 @@ export default function LoginPage() {
                    min-h-[calc(100dvh-var(--header-h)-var(--footer-h))]"
       >
         <div className="mx-auto w-full max-w-md rounded-xl border border-white/10 bg-surface/85 p-5 shadow-[0_25px_40px_-15px_rgba(0,0,0,0.6)] backdrop-blur-md">
-          <form onSubmit={onSubmit} className="space-y-4" aria-describedby="login-error">
+          <form onSubmit={onSubmit} className="space-y-4" aria-describedby="login-error" noValidate>
             <div className="space-y-1">
               <label htmlFor="identity" className="block text-[11px] font-semibold opacity-85">
                 Nome/E-mail
