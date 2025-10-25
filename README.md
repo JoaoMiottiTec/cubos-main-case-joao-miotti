@@ -1,42 +1,42 @@
-Cubos Movies
+🎬 Cubos Movies
 
 Cubos Movies é um projeto fullstack desenvolvido para fins de entrevista técnica, com o objetivo de demonstrar domínio em arquitetura, boas práticas e tecnologias modernas em Node.js e Next.js.
 
 O sistema permite que usuários se cadastrem, façam login e adicionem filmes por meio de uma API própria — com persistência em banco de dados PostgreSQL e armazenamento de imagens no Cloudflare R2.
 
-Contexto do Projeto
+🧠 Contexto do Projeto
 
 O projeto foi desenvolvido em um formato monorepo, com os diretórios principais apps/api e apps/web, representando respectivamente o backend e o frontend.
 Ambos estão totalmente funcionais de forma independente, mas a integração entre eles ainda não foi finalizada.
 
-Essa separação foi intencional, permitindo demonstrar de maneira clara o domínio individual sobre cada stack e arquitetura.
-O backend está funcional e testável via Postman, e o frontend possui toda a base visual e de autenticação.
+💡 Essa separação foi intencional, permitindo demonstrar de maneira clara o domínio individual sobre cada stack e arquitetura.
+O backend está 100% funcional e testável via Postman, e o frontend possui toda a base visual e de autenticação.
 
-Tech Stack
+⚙️ Tech Stack
 Backend
 
-Node.js
+🟢 Node.js — runtime JavaScript moderno e eficiente
 
-Fastify
+⚡ Fastify — framework leve e de alta performance para APIs
 
-Prisma ORM
+🧩 Prisma ORM — abstração de banco tipada e produtiva
 
-PostgreSQL
+🐘 PostgreSQL — banco de dados relacional robusto
 
-Cloudflare R2
+☁️ Cloudflare R2 — armazenamento de imagens escalável
 
-Docker Compose
+🐳 Docker Compose — orquestração e execução local dos serviços
 
 Frontend
 
-Next.js
+⚛️ Next.js — framework React com renderização híbrida (SSR/SSG)
 
-TailwindCSS
+🎨 TailwindCSS — estilização moderna e responsiva
 
-TypeScript
+🧠 TypeScript — tipagem estática e previsibilidade no código
 
-Estrutura do Projeto
-CUBOS-MAIN-CASE-MOVIES/
+🧩 Estrutura do Projeto
+CUBOS-MAIN-CASE-JOAO-MOVIES/
 ├── apps/
 │   ├── api/       # Backend (Fastify + Prisma)
 │   └── web/       # Frontend (Next.js + Tailwind)
@@ -54,26 +54,26 @@ CUBOS-MAIN-CASE-MOVIES/
 ├── tsconfig.json
 └── README.md
 
-Recursos Implementados
+🧪 Recursos Implementados
 Backend
 
-Cadastro e autenticação de usuários
+✅ Cadastro e autenticação de usuários
 
-CRUD completo de filmes
+✅ CRUD completo de filmes
 
-Upload de imagens para o Cloudflare R2
+✅ Upload de imagens para o Cloudflare R2
 
-Banco versionado via Prisma Migrate
+✅ Banco versionado via Prisma Migrate
 
 Frontend
 
-Layout e estilização base (login, filmes, etc.)
+✅ Layout e estilização base (login, filmes, etc.)
 
-Integração visual com Tailwind
+✅ Integração visual com Tailwind
 
-Conexão com o backend pendente (em desenvolvimento)
+⚠️ Conexão com o backend pendente (será concluída em breve)
 
-Execução do Projeto
+🚀 Execução do Projeto
 
 O projeto utiliza PNPM como gerenciador de pacotes.
 
@@ -87,42 +87,41 @@ pnpm style
 docker compose up -d
 
 
-Após isso, basta importar o arquivo Postman incluído no repositório para testar as rotas da API.
+Depois disso, basta importar o arquivo Postman incluído no repositório para testar as rotas da API.
 
-Arquitetura e Decisões Técnicas
+🧱 Arquitetura e Decisões Técnicas
 
-O projeto foi pensado para ser modular, escalável e claro, refletindo boas práticas de engenharia moderna:
+O foco principal foi criar uma estrutura escalável e modular, inspirada em boas práticas de mercado:
 
-Fastify foi escolhido pela performance superior e ecossistema mais moderno em relação ao Express.
+Fastify foi escolhido pela performance superior ao Express e pelo ecossistema mais moderno.
 
 Prisma garante tipagem e segurança nas queries, reduzindo erros e aumentando produtividade.
 
-R2 (Cloudflare) foi adotado por oferecer compatibilidade com S3 a baixo custo.
+R2 (Cloudflare) foi adotado por oferecer armazenamento compatível com S3, porém com custo reduzido e boa integração com Node.
 
-Monorepo (apps/api + apps/web) simplifica o gerenciamento e compartilhamento de configuração.
+Monorepo (apps/api + apps/web) simplifica o gerenciamento entre frontend e backend.
 
-Docker Compose garante ambiente local replicável e estável.
+Docker Compose assegura ambiente de desenvolvimento replicável e isolado.
 
-PNPM otimiza o uso de cache e simplifica dependências no monorepo.
+PNPM foi utilizado pela eficiência no cache e pela forma como gerencia dependências no monorepo.
 
-Próximos Passos
+🧭 Próximos Passos
 
-Finalizar integração frontend ↔ backend
+ Finalizar integração frontend ↔ backend
 
-Implementar autenticação JWT no frontend
+ Implementar autenticação JWT no frontend
 
-Exibir e enviar imagens para o R2 diretamente via client
+ Exibir e enviar imagens para o R2 diretamente via client
 
-Adicionar testes automatizados de integração
+ Adicionar testes automatizados de integração
 
-Configurar deploy (Vercel + Railway / Fly.io)
+ Configurar deploy (Vercel + Railway / Fly.io)
 
-Autor
+👤 Autor
 
-Desenvolvido por Tito
-LinkedIn • GitHub
+Desenvolvido por João Vitor dos Santos (Miotti)
 
-Licença
+📄 Licença
 
 Distribuído sob a licença MIT.
 Sinta-se à vontade para estudar, adaptar e aprimorar o projeto.
