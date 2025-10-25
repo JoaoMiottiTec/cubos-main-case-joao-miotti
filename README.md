@@ -80,8 +80,6 @@ O projeto utiliza PNPM como gerenciador de pacotes.
 # Instalar dependências
 pnpm install
 
-# Aplicar formatação e padrões
-pnpm style
 
 # Subir containers (Postgres etc.)
 docker compose up -d
