@@ -21,3 +21,7 @@ export function conflict(msg = 'Conflict') {
 export function unauthorized(msg = 'Unauthorized') {
   return new AppError(msg, 401);
 }
+
+export function forbidden(msg = 'Forbidden') {
+  return new AppError(msg, 403);
+}

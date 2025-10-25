@@ -9,7 +9,7 @@ type FormState = {
   confirm: string;
 };
 
-const API = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '');
+const API = '';
 
 export default function RegisterPage() {
   const [form, setForm] = useState<FormState>({
@@ -61,13 +61,12 @@ export default function RegisterPage() {
         password: form.password,
       };
 
-      const res = await fetch(`${API}/signup`, {
+      const res = await fetch(`/api/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
-        // se sua API usa cookie httpOnly, habilite:
         // credentials: 'include',
         body: JSON.stringify(payload),
       });

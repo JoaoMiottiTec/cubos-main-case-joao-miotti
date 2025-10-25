@@ -1,4 +1,4 @@
-import { notFound } from '../../core/errors.js';
+import { notFound, forbidden } from '../../core/errors.js';
 import prisma from '../../prisma.js';
 import { movieSelect } from './select.js';
 import type { CreateMovieInput, ListMoviesQuery, MovieSafe } from './types.js';
@@ -11,11 +11,19 @@ export const moviesService = {
     });
   },
 
-  async listByUser(userId: string, q: ListMoviesQuery) {
-    const where = {
-      userId,
+  async listAll(q: ListMoviesQuery) {
+    const where: any = {
       ...(q.status ? { status: q.status } : {}),
+      ...(q.search
+        ? {
+            OR: [
+              { title: { contains: q.search, mode: 'insensitive' } },
+              { genres: { hasSome: q.search.split(/\s*,\s*/).filter(Boolean) } },
+            ],
+          }
+        : {}),
     };
+
     const [items, total] = await Promise.all([
       prisma.movie.findMany({
         where,
@@ -26,18 +34,35 @@ export const moviesService = {
       }),
       prisma.movie.count({ where }),
     ]);
+
     return { items, total, page: q.page, pageSize: q.pageSize };
   },
 
-  async findByIdOwned(userId: string, id: string): Promise<MovieSafe> {
-    const movie = await prisma.movie.findFirst({ where: { id, userId }, select: movieSelect });
+  async findById(id: string): Promise<MovieSafe> {
+    const movie = await prisma.movie.findUnique({ where: { id }, select: movieSelect });
     if (!movie) throw notFound('Movie not found');
     return movie;
   },
 
-  async remove(userId: string, id: string) {
-    const found = await prisma.movie.findFirst({ where: { id, userId }, select: { id: true } });
+  // ✅ apenas o dono pode editar
+  async update(userId: string, id: string, data: Partial<CreateMovieInput>): Promise<MovieSafe> {
+    const found = await prisma.movie.findUnique({ where: { id }, select: { id: true, userId: true } });
     if (!found) throw notFound('Movie not found');
+    if (found.userId !== userId) throw forbidden('Você não tem permissão para editar este filme.');
+
+    return prisma.movie.update({
+      where: { id },
+      data,
+      select: movieSelect,
+    });
+  },
+
+  // ✅ apenas o dono pode excluir
+  async remove(userId: string, id: string) {
+    const found = await prisma.movie.findUnique({ where: { id }, select: { id: true, userId: true } });
+    if (!found) throw notFound('Movie not found');
+    if (found.userId !== userId) throw forbidden('Você não tem permissão para excluir este filme.');
+
     await prisma.movie.delete({ where: { id } });
     return { deleted: true };
   },
